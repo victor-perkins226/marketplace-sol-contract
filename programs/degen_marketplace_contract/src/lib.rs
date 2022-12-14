@@ -3,18 +3,18 @@ use anchor_spl::token::{self, TokenAccount, Token, Mint};
 use anchor_lang::solana_program::{clock};
 use crate::constants::*;
 
-declare_id!("4NkEmqohQGvZo191pHG117LYGHm26rdp3TsdSDML1NGq");
+declare_id!("wdBARwMGxJuL4FpYF1fAqMQpT3gGpbdgX1da4yHVEHm");
 
 mod constants {
     use anchor_lang::prelude::Pubkey;
 
-    pub const ADMIN_KEY: Pubkey = anchor_lang::solana_program::pubkey!("DuQbVfRugVnRkakZ7a6vowHEuhwFFQxg3DpPFPiiNadr");
+    pub const ADMIN_KEY: Pubkey = anchor_lang::solana_program::pubkey!("3ttYrBAp5D2sTG2gaBjg8EtrZecqBQSBuFRhsqHWPYxX");
     pub const LAMPORTS_PER_SOL: u64 = 1000000000;
     pub const MARKET_FEE: u32 = 170;
 }
 
 #[program]
-pub mod submarine_marketplace_contract {
+pub mod degen_marketplace_contract {
 
     use super::*;
     use anchor_lang::AccountsClose;
@@ -409,6 +409,7 @@ pub struct ListContext<'info> {
     pub pool: Account<'info, Pool>,
     #[account(mut)]
     pub user: Signer<'info>,
+    #[account(constraint = admin.key() == ADMIN_KEY)]
     pub admin: Signer<'info>,
     pub mint: Account<'info, Mint>,
     #[account(mut, constraint = token_from.owner == user.key() && token_from.mint == mint.key())]
@@ -426,6 +427,7 @@ pub struct UpdateListContext<'info> {
     pub pool: Account<'info, Pool>,
     #[account(mut)]
     pub user: Signer<'info>,
+    #[account(constraint = admin.key() == ADMIN_KEY)]
     pub admin: Signer<'info>,
     pub mint: Account<'info, Mint>,
     #[account(mut)]
@@ -438,6 +440,7 @@ pub struct CancelListContext<'info> {
     pub pool: Account<'info, Pool>,
     #[account(mut)]
     pub user: Signer<'info>,
+    #[account(constraint = admin.key() == ADMIN_KEY)]
     pub admin: Signer<'info>,
     pub mint: Account<'info, Mint>,
     #[account(mut, constraint = token_from.owner == pool.key() && token_from.mint == mint.key())]
@@ -454,6 +457,7 @@ pub struct BuyContext<'info> {
     pub pool: Account<'info, Pool>,
     #[account(mut)]
     pub buyer: Signer<'info>,
+    #[account(constraint = admin.key() == ADMIN_KEY)]
     pub admin: Signer<'info>,
     /// CHECK: it's not dangerous
     #[account(mut)]
@@ -481,6 +485,7 @@ pub struct CreateBidContext<'info> {
     pub seller: Signer<'info>,
     #[account(mut)]
     pub vault: Signer<'info>,
+    #[account(constraint = admin.key() == ADMIN_KEY)]
     pub admin: Signer<'info>,
     pub mint: Account<'info, Mint>,
     pub token_account: Account<'info, TokenAccount>,
@@ -496,6 +501,7 @@ pub struct UpdateBidContext<'info> {
     #[account(mut)]
     pub bidder: Signer<'info>,
     pub seller: Signer<'info>,
+    #[account(constraint = admin.key() == ADMIN_KEY)]
     pub admin: Signer<'info>,
     #[account(mut)]
     pub vault: Signer<'info>,
@@ -512,6 +518,7 @@ pub struct CancelBidContext<'info> {
     pub vault: Signer<'info>,
     #[account(mut)]
     pub bidder: Signer<'info>,
+    #[account(constraint = admin.key() == ADMIN_KEY)]
     pub admin: Signer<'info>,
     pub system_program: Program<'info, System>
 }
@@ -529,7 +536,7 @@ pub struct AcceptBidContext<'info> {
     /// CHECK it's not dangerous
     #[account(mut)]
     pub bidder: AccountInfo<'info>,
-    #[account(mut)]
+    #[account(mut, constraint = admin.key() == ADMIN_KEY)]
     pub admin: Signer<'info>,
     pub mint: Account<'info, Mint>,
     /// CHECK: it's not dangerous
