@@ -3,7 +3,7 @@ use anchor_spl::token::{self, TokenAccount, Token, Mint};
 use anchor_lang::solana_program::{clock};
 use crate::constants::*;
 
-declare_id!("wdBARwMGxJuL4FpYF1fAqMQpT3gGpbdgX1da4yHVEHm");
+declare_id!("EJpcoKdCNCQUgauCLdLpiqC9EmaG8HEBZpCFqUDBMvZG");
 
 mod constants {
     use anchor_lang::prelude::Pubkey;
@@ -482,7 +482,8 @@ pub struct CreateBidContext<'info> {
     pub pool: Account<'info, Pool>,
     #[account(mut)]
     pub bidder: Signer<'info>,
-    pub seller: Signer<'info>,
+    /// CHECK: it's not a dangerous
+    pub seller: AccountInfo<'info>,
     #[account(mut)]
     pub vault: Signer<'info>,
     #[account(constraint = admin.key() == ADMIN_KEY)]

@@ -1,7 +1,7 @@
 [programs.localnet]
 degen_marketplace_contract = "Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS"
 [programs.devnet]
-degen_marketplace_contract = "wdBARwMGxJuL4FpYF1fAqMQpT3gGpbdgX1da4yHVEHm"
+degen_marketplace_contract = "EJpcoKdCNCQUgauCLdLpiqC9EmaG8HEBZpCFqUDBMvZG"
 
 [registry]
 url = "https://anchor.projectserum.com"
